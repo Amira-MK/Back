@@ -27,12 +27,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4hw(&l3$h7(jq%$0aw$lg#jc&da*ji(f9yui6^v#yh4v%49s*9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    '*'
+    '*',
+    'backend-b1ye.onrender.com'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React frontend
+    "https://8d94-197-206-219-48.ngrok-free.app",  # Ngrok URL
+]
 
 # Application definition
 
@@ -59,7 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -86,11 +92,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://localhost/mydb'
+#     )
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://localhost/mydb'
-    )
-}
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # DATABASES = {
 #     'default': {
